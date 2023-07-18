@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <form class="todo-task-form" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div class="form-group">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+    <div class="form-group">
+      {{ form.start_date.label_tag }}
+      {{ form.start_date }}
+    </div>
+    <div class="form-group">
+      {{ form.end_date.label_tag }}
+      {{ form.end_date }}
+    </div>
+    <div class="form-group">
+      {{ form.user.label_tag }}
+      {{ form.user }}
+    </div>
+    <div class="form-group">
+      {{ form.is_completed.label_tag }}
+      {{ form.is_completed }}
+    </div>
+    <button type="submit">Create Task</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="mb-3">
+            <a href="{% url 'createTask' %}" class="btn btn-primary">Create</a>
+            <a href="{% url 'show_pending_task'%}" class="btn btn-primary">Show Pending Tasks</a>
+            <a href="{% url 'todoList' %}" class="btn btn-primary">Show All Tasks</a>
+        </div>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert {{msg.tags}}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.start_date }}</td>
+                        <td>{{ task.end_date }}</td>
+                        <td>{{ task.user }}</td>
+                        <td>
+                            {% if task.is_completed %}
+                                <span class="badge badge-success">Completed</span>
+                            {% else %}
+                                <span class="badge badge-warning">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'edit_task' task_id=task.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'delete_task' task_id=task.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    // Dismiss the success message after 8 seconds
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('.alert-success').fadeOut('slow');
+            $('.alert-danger').fadeOut('slow');
+        }, 8000);
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
